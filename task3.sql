@@ -36,3 +36,17 @@ ORDER BY sale_id DESC;
 SELECT *
 FROM sales
 WHERE sale_date BETWEEN '2022-01-01' AND '2022-02-01';
+
+SELECT *
+FROM sales
+WHERE sale_amount LIKE ('15_%');
+
+SELECT *
+FROM sales
+WHERE sale_amount IN (75, 100);
+
+SELECT COUNT(sale_id) AS Product_Each_Month, MONTH(sale_date) AS Months
+FROM sales
+WHERE sale_date >= '2022-01-01'
+GROUP BY MONTH(sale_date)
+HAVING COUNT(sale_id) > 0;
