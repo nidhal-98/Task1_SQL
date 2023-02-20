@@ -30,3 +30,12 @@ WHERE id = 5
 
 SELECT *
 FROM students
+
+DELETE FROM students
+WHERE name LIKE 'David%';
+
+DELETE FROM customers
+WHERE customer_id = 2;
+
+DELETE FROM employees
+WHERE salary >= 55000.50;
