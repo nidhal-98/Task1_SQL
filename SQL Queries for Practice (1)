@@ -152,25 +152,76 @@ SELECT *
 FROM employeees
 WHERE salary LIKE '___'
 -------------------------------------------------------------------------------------------------------------------------------------
- Write a SQL query to find those employees who joined in the month of APRIL. Return complete information about the employees
- Write a SQL query to find out which employees joined the company before the 19th of the month. Return complete information about the employees
- Write a SQL query to identify those employees who have been working as a SALESMAN and month portion of the experience is more than 10. Return complete information about the employees.
- Write a SQL query to find those employees of department id 3001 or 1001 and joined in the year 1991. Return complete information about the employees.
- Write a SQL query to find the employees who are working for the department ID 1001 or 2001. Return complete information about the employees.
- Write a SQL query to find those employees whose designation is ‘CLERK’ and work in the department ID 2001. Return complete information about the employees.
- Write a SQL query to find those employees who are either CLERK or MANAGER. Return complete information about the employees.
- Write a SQL query to identify those employees who joined in any month other than February. Return complete information about the employees.
- Write a SQL query to identify the employees who joined the company in June 1991. Return complete information about the employees.
- Write a SQL query to search for all employees with an annual salary between 24000 and 50000 (Begin and end values are included.). Return complete information about the employees.
- Write a SQL query to identify all employees who joined the company on 1st May, 20th February, and 3rd December 1991. Return complete information about the employees.
- Write a SQL query to find out which employees are working under the managers 63679, 68319, 66564, or 69000. Return complete information about the employees.
- Write a SQL query to find those employees who joined in 90's. Return complete information about the employees.
- Write a SQL query to find those managers who are in the department 1001 or 2001. Return complete information about the employees.
- Write a SQL query to identify employees who joined in the month of FEBRUARY with a salary range of 1001 to 2000 (Begin and end values are included.). Return complete information about the employees.
- Write a SQL query to find those employees who joined before or after the year 1991. Return complete information about the employees.
- Write a SQL query to find employees along with their department details. Return employee ID, employee name, job name, manager ID, hire date, salary, commission, department ID, and department name.
- Write a SQL query to identify those employees who earn 60000 or more per year or do not work as ANALYST. Return employee name, job name, (12*salary) as Annual Salary, department ID, and grade.
- Write a SQL query to identify employees whose salaries are higher than their managers' salaries. Return employee name, job name, manager ID, salary, manager name, manager's salary
+ (32) Write a SQL query to find those employees who joined in the month of APRIL. Return complete information about the employees
+SELECT *
+FROM employeees
+WHERE MONTH(hire_date) = 04;
+-------------------------------------------------------------------------------------------------------------------------------------
+ (33) Write a SQL query to find out which employees joined the company before the 19th of the month. Return complete information about the employees
+SELECT *
+FROM employeees
+WHERE DAY(hire_date) < 19;
+-------------------------------------------------------------------------------------------------------------------------------------
+ (34) Write a SQL query to identify those employees who have been working as a SALESMAN and month portion of the experience is more than 10. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE job_name LIKE 'SALESMAN' 
+AND YEAR(GETDATE()) - YEAR(hire_date) > 10;
+-------------------------------------------------------------------------------------------------------------------------------------
+ (35) Write a SQL query to find those employees of department id 3001 or 1001 and joined in the year 1991. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE YEAR(hire_date) = 1991
+AND (dep_id = 3001 OR dep_id = 1001);
+-------------------------------------------------------------------------------------------------------------------------------------
+ (36) Write a SQL query to find the employees who are working for the department ID 1001 or 2001. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE(dep_id = 1001 OR dep_id = 2001);
+-------------------------------------------------------------------------------------------------------------------------------------
+ (37) Write a SQL query to find those employees whose designation is ‘CLERK’ and work in the department ID 2001. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE job_name LIKE 'CLERK' AND dep_id = 2001;
+-------------------------------------------------------------------------------------------------------------------------------------
+ (38) Write a SQL query to find those employees who are either CLERK or MANAGER. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE job_name LIKE 'CLERK' OR job_name LIKE 'MANAGER';
+-------------------------------------------------------------------------------------------------------------------------------------
+ (39) Write a SQL query to identify those employees who joined in any month other than February. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE MONTH(hire_date) <> 02;
+-------------------------------------------------------------------------------------------------------------------------------------
+ (40) Write a SQL query to identify the employees who joined the company in June 1991. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE hire_date LIKE '%1991_06%';
+-------------------------------------------------------------------------------------------------------------------------------------
+ (41) Write a SQL query to search for all employees with an annual salary between 24000 and 50000 (Begin and end values are included.). Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE (salary*12) BETWEEN 23999 AND 49999
+-------------------------------------------------------------------------------------------------------------------------------------
+ (42) Write a SQL query to identify all employees who joined the company on 1st May, 20th February, and 3rd December 1991. Return complete information about the employees.
+-------------------------------------------------------------------------------------------------------------------------------------
+ (43) Write a SQL query to find out which employees are working under the managers 63679, 68319, 66564, or 69000. Return complete information about the employees.
+-------------------------------------------------------------------------------------------------------------------------------------
+ (44) Write a SQL query to find those employees who joined in 90's. Return complete information about the employees.
+-------------------------------------------------------------------------------------------------------------------------------------
+ (45) Write a SQL query to find those managers who are in the department 1001 or 2001. Return complete information about the employees.
+-------------------------------------------------------------------------------------------------------------------------------------
+ (46) Write a SQL query to identify employees who joined in the month of FEBRUARY with a salary range of 1001 to 2000 (Begin and end values are included.). Return complete information about the employees.
+-------------------------------------------------------------------------------------------------------------------------------------
+ (47) Write a SQL query to find those employees who joined before or after the year 1991. Return complete information about the employees.
+-------------------------------------------------------------------------------------------------------------------------------------
+ (48) Write a SQL query to find employees along with their department details. Return employee ID, employee name, job name, manager ID, hire date, salary, commission, department ID, and department name.
+-------------------------------------------------------------------------------------------------------------------------------------
+ (49) Write a SQL query to identify those employees who earn 60000 or more per year or do not work as ANALYST. Return employee name, job name, (12*salary) as Annual Salary, department ID, and grade.
+-------------------------------------------------------------------------------------------------------------------------------------
+ (50) Write a SQL query to identify employees whose salaries are higher than their managers' salaries. Return employee name, job name, manager ID, salary, manager name, manager's salary
+-------------------------------------------------------------------------------------------------------------------------------------
  Write a SQL query to find those employees whose salary is between 2000 and 5000 (Begin and end values are included.) and location is PERTH. Return employee name, department ID, salary, and commission
  Write a SQL query to find the employees whose department ID is 1001 or 3001 and whose salary grade is not 4. They joined the company before 1992-12-31. Return grade, employee name.
  Write a SQL query to find those employees whose manager name is JONAS. Return employee id, employee name, job name, manager ID, hire date, salary, department ID, employee name.

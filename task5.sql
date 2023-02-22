@@ -164,3 +164,45 @@ WHERE salary%2 = 1
 SELECT *
 FROM employeees
 WHERE salary LIKE '___'
+
+SELECT *
+FROM employeees
+WHERE MONTH(hire_date) = 04;
+
+SELECT *
+FROM employeees
+WHERE DAY(hire_date) < 19;
+
+SELECT *
+FROM employeees
+WHERE job_name LIKE 'SALESMAN' 
+AND YEAR(GETDATE()) - YEAR(hire_date) > 10;
+
+SELECT *
+FROM employeees
+WHERE YEAR(hire_date) = 1991
+AND (dep_id = 3001 OR dep_id = 1001);
+
+SELECT *
+FROM employeees
+WHERE(dep_id = 1001 OR dep_id = 2001);
+
+SELECT *
+FROM employeees
+WHERE job_name LIKE 'CLERK' AND dep_id = 2001;
+
+SELECT *
+FROM employeees
+WHERE job_name LIKE 'CLERK' OR job_name LIKE 'MANAGER';
+
+SELECT *
+FROM employeees
+WHERE MONTH(hire_date) <> 02;
+
+SELECT *
+FROM employeees
+WHERE hire_date LIKE '%1991_06%';
+
+SELECT *
+FROM employeees
+WHERE (salary*12) BETWEEN 23999 AND 49999
