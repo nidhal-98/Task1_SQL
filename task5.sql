@@ -59,3 +59,29 @@ SELECT DISTINCT job_name
 
 SELECT emp_name, (salary*1.15) AS Salary
   FROM employeees
+
+SELECT emp_name, job_name
+  FROM employeees
+
+SELECT emp_id, emp_name, salary, FORMAT(hire_date, N'MMMM dd "," yyyy', 'en-US')
+  FROM employeees
+WHERE hire_date = 'February 22, 1991'
+
+SELECT COUNT(emp_id) AS Counting
+  FROM employeees
+WHERE salary+commission > 2200
+
+SELECT DISTINCT job_name, dep_id
+  FROM employeees
+
+SELECT *
+  FROM employeees
+WHERE dep_id = '2001'
+
+SELECT *
+  FROM employeees
+WHERE hire_date < '1991'
+
+SELECT AVG(salary) AS average_salary
+  FROM employeees
+WHERE job_name = 'ANALYST'
