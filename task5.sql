@@ -119,4 +119,48 @@ WHERE job_name = 'CLERK'
 
 SELECT *
 FROM employeees
-WHERE hire_date <= DATEADD(year, -27, GETDATE())
+WHERE hire_date <= DATEADD(year, -27, GETDATE()) 
+
+SELECT *
+FROM employeees
+WHERE salary < 3500
+
+SELECT emp_name, job_name, salary
+FROM employeees
+WHERE job_name LIKE 'ANALYST'
+
+SELECT *
+FROM employeees
+WHERE YEAR(hire_date) = 1991;
+
+SELECT emp_id, emp_name, hire_date, salary
+FROM employeees
+WHERE hire_date < '1991-04-01'
+
+SELECT emp_name, job_name
+FROM employeees
+WHERE manager_id IS NULL
+
+SELECT emp_id, emp_name, hire_date, salary
+FROM employeees
+WHERE hire_date = '1991-05-01'
+
+SELECT emp_id, emp_name, salary, (YEAR(GETDATE()) - YEAR(hire_date)) AS experience
+FROM employeees
+WHERE emp_id = 68319
+
+SELECT emp_id, emp_name, salary, (YEAR(GETDATE()) - YEAR(hire_date)) AS experience
+FROM employeees
+WHERE (salary/30) > 100
+
+SELECT emp_name
+FROM employeees
+WHERE (YEAR('1999-12-31') - YEAR(hire_date)) >= 8
+
+SELECT *
+FROM employeees
+WHERE salary%2 = 1
+
+SELECT *
+FROM employeees
+WHERE salary LIKE '___'
