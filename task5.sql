@@ -85,3 +85,23 @@ WHERE hire_date < '1991'
 SELECT AVG(salary) AS average_salary
   FROM employeees
 WHERE job_name = 'ANALYST'
+
+SELECT *
+  FROM employeees
+WHERE emp_name LIKE 'b%' OR emp_name LIKE '%e'
+
+SELECT E.*, D.dep_name
+  FROM employeees E, department D
+WHERE D.dep_name LIKE 'B%' OR D.dep_name LIKE '%E'
+
+SELECT E.*, D.dep_location
+  FROM employeees E, department D
+WHERE D.dep_location LIKE 'F%' OR D.dep_location LIKE '%N'
+
+SELECT *
+FROM employeees
+WHERE commission > salary
+
+SELECT *
+FROM employeees
+WHERE commission > salary
