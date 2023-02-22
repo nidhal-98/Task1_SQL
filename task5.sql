@@ -98,10 +98,25 @@ SELECT E.*, D.dep_location
   FROM employeees E, department D
 WHERE D.dep_location LIKE 'F%' OR D.dep_location LIKE '%N'
 
-SELECT *
-FROM employeees
+SELECT E.*, D.dep_name, dep_location
+FROM employeees E, department D
 WHERE commission > salary
+
+SELECT *, (salary*1.25) AS after_increase
+FROM employeees
+WHERE (salary*1.25)>3000
 
 SELECT *
 FROM employeees
-WHERE commission > salary
+WHERE MONTH(hire_date) = 1;
+
+SELECT CONCAT(emp_name, ' works for ', manager_id) AS employee_work_for_manager
+FROM employeees
+
+SELECT *
+FROM employeees
+WHERE job_name = 'CLERK'
+
+SELECT *
+FROM employeees
+WHERE hire_date <= DATEADD(year, -27, GETDATE())
