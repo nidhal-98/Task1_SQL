@@ -176,7 +176,7 @@ WHERE DAY(hire_date) < 19;
 SELECT *
 FROM employeees
 WHERE job_name LIKE 'SALESMAN' 
-AND YEAR(GETDATE()) - YEAR(hire_date) > 10;
+AND (YEAR(GETDATE()) - YEAR(hire_date))/2 > 10;
 
 SELECT *
 FROM employeees
@@ -206,3 +206,11 @@ WHERE hire_date LIKE '%1991_06%';
 SELECT *
 FROM employeees
 WHERE (salary*12) BETWEEN 23999 AND 49999
+
+SELECT *
+FROM employeees
+WHERE hire_date LIKE '%____-05-01%' OR hire_date LIKE '%____-02-20%' OR hire_date LIKE '%1991-12-03%'
+
+SELECT *
+FROM employeees
+WHERE manager_id IN (63679, 68319, 66564, 69000);
