@@ -381,3 +381,32 @@ ORDER BY (salary*12) ASC
 
 SELECT emp_id, emp_name, hire_date, GETDATE() AS Current_Date1, YEAR(GETDATE()) - YEAR(hire_date) AS Experinces 
 FROM employeees
+
+SELECT *
+FROM employeees
+WHERE hire_date > '1991-06-30'
+ORDER BY job_name ASC
+
+SELECT E.*, D.dep_name
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
+AND dep_name IN ('FINANCE', 'AUDIT')
+ORDER BY dep_id ASC
+
+SELECT E.*, S.grade
+FROM employeees E, salary_grade S
+WHERE (E.salary BETWEEN S.min_salary AND S.max_salary)
+ORDER BY S.grade ASC
+
+SELECT E.*, D.*, S.grade
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+ORDER BY D.dep_id ASC
+
+EXEC emp_table
+
+SELECT *
+FROM employeees
+WHERE job_name <> 'CLERK'
+ORDER BY salary DESC

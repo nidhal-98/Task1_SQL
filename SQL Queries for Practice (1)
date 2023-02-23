@@ -417,14 +417,36 @@ SELECT emp_id, emp_name, hire_date, GETDATE() AS Current_Date1, YEAR(GETDATE()) 
 FROM employeees
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (76) Write a SQL query to list the employees in ascending order of designations of those joined after the second half of 1991.
+SELECT *
+FROM employeees
+WHERE hire_date > '1991-06-30'
+ORDER BY job_name ASC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (77) Write a SQL query to find the location of all the employees working in the FINANCE or AUDIT department. Sort the result-set in ascending order by department ID. Return complete information about the employees.
+SELECT E.*, D.dep_name
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
+AND dep_name IN ('FINANCE', 'AUDIT')
+ORDER BY dep_id ASC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (78) Write a SQL query to find the employees along with grades in ascending order. Return complete information about the employees.
+SELECT E.*, S.grade
+FROM employeees E, salary_grade S
+WHERE (E.salary BETWEEN S.min_salary AND S.max_salary)
+ORDER BY S.grade ASC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (79) Write a SQL query to find the employees according to the department in ascending order. Return name, job name, department, salary, and grade.
+SELECT E.*, D.*, S.grade
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+ORDER BY D.dep_id ASC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (80) Write a SQL query to select all employees except CLERK and sort the results in descending order by salary. Return employee name, job name, salary, grade and department name.
+SELECT *
+FROM employeees
+WHERE job_name <> 'CLERK'
+ORDER BY salary DESC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (81) Write a SQL query to find those employees who work in the department 1001 or 2001. Return employee ID, name, salary, department, grade, experience, and annual salary.
 ------------------------------------------------------------------------------------------------------------------------------------- 
