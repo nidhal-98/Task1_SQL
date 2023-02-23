@@ -354,3 +354,30 @@ SELECT *
 FROM employeees
 WHERE salary < 1000
 ORDER BY salary ASC
+
+SELECT *
+FROM employeees
+ORDER BY job_name ASC, emp_id DESC
+
+SELECT DISTINCT job_name, dep_id
+FROM employeees
+WHERE dep_id IN (2001, 3001)
+ORDER BY dep_id DESC
+
+SELECT *
+FROM employeees
+WHERE job_name <> 'PRESIDENT' AND job_name <> 'MANAGER'
+ORDER BY salary ASC
+
+SELECT *
+FROM employeees
+WHERE salary*12 < 25000
+ORDER BY salary ASC
+
+SELECT emp_id, emp_name, salary*12 AS Annual_Salary, salary/30 AS Daily_Salary
+FROM employeees
+WHERE job_name = 'SALESMAN'
+ORDER BY (salary*12) ASC
+
+SELECT emp_id, emp_name, hire_date, GETDATE() AS Current_Date1, YEAR(GETDATE()) - YEAR(hire_date) AS Experinces 
+FROM employeees

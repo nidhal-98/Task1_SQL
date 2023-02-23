@@ -379,46 +379,109 @@ WHERE salary < 1000
 ORDER BY salary ASC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (69) Write a SQL query to list the employees in ascending order based on salary. Return complete information about the employees.
+SELECT *
+FROM employeees
+ORDER BY salary ASC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (70) Write a SQL query to list the employees in the ascending order by job title and in descending order by employee ID. Return complete information about the employees.
- Write a SQL query to list the unique jobs of department 2001 and 3001 in descending order. Return job name.
- Write a SQL query to list all the employees except the PRESIDENT and the MANAGER in ascending order of salaries. Return complete information about the employees.
- Write a SQL query to find the employees whose annual salary is less than $25,000 per year. Sort the result set in ascending order of the salary. Return complete information about the employees.
- Write a SQL query to list the employees who works as a SALESMAN. Sort the result set in ascending order of annual salary. Return employee id, name, annual salary, daily salary of all the employees.
- Write a SQL query to list the employee ID, name, hire date, current date and experience of the employees in ascending order on their experiences.
- Write a SQL query to list the employees in ascending order of designations of those joined after the second half of 1991.
- Write a SQL query to find the location of all the employees working in the FINANCE or AUDIT department. Sort the result-set in ascending order by department ID. Return complete information about the employees.
- Write a SQL query to find the employees along with grades in ascending order. Return complete information about the employees.
- Write a SQL query to find the employees according to the department in ascending order. Return name, job name, department, salary, and grade.
- Write a SQL query to select all employees except CLERK and sort the results in descending order by salary. Return employee name, job name, salary, grade and department name.
- Write a SQL query to find those employees who work in the department 1001 or 2001. Return employee ID, name, salary, department, grade, experience, and annual salary.
- Write a SQL query to list the details of the employees along with the details of their departments.
- Write a SQL query to list the employees who are senior to their MANAGERS. Return complete information about the employees.
- Write a SQL query to find those employees who work in the department 1001. Sort the result-set in ascending order by salary. Return employee ID, employee name, salary and department ID.
- Write a SQL query to find the second highest salary. Return second highest salary.
- Write a SQL query to calculate the average salary and average total remuneration (salary and commission) for each type of job. Return name, average salary and average total remuneration.
- Write a SQL query to calculate the total annual salary distributed across each job in 1991. Return job name, total annual salary.
- Write a SQL query to list the employee id, name, department id, location of all the employees.
- Write a SQL query to find those employees who work in the department ID 1001 or 2001. Return employee ID, employee name, department ID, department location, and department name.
- Write a SQL query to find those employees whose salary is in the range of minimum and maximum salary. Return employee ID, name, salary and grade.
- Write a SQL query to create a list of the managers and the number of employees they supervise. Sort the result set in ascending order on manager. Return manager ID and number of employees under them.
- Write a SQL query to count the number of employees in each designation of a department. Return department id, job name and number of employees.
- Write a SQL query to identify the departments in which at least two employees are employed. Return department id, number of employees.
- Write a SQL query to list the grade, number of employees, and maximum salary of each grade.
- Write a SQL query to identify departments with at least two SALESMEN in each grade. Return department name, grade and number of employees.
- Write a SQL query to identify departments with fewer than four employees. Return department ID, number of employees.
- Write a SQL query to find which departments have at least two employees. Return department name, number of employees.
- Write a SQL query to check whether the employees ID are unique or not. Return employee id, number of employees.
- Write a SQL query to find number of employees and average salary. Group the result set on department id and job name. Return number of employees, average salary, department ID, and job name.
- Write a SQL query to identify those employees whose names begin with 'A' and are six characters long. Return employee name.
- Write a SQL query to find those employees whose name is six characters in length and the third character must be 'R'. Return complete information about the employees.
- Write a SQL query to find those employees whose name is six characters in length, starting with 'A' and ending with 'N'. Return number of employees.
- Write a SQL query to find those employees who joined in the month of where the second letter is 'a'. Return number of employees.
- Write a SQL query to find those employees whose names contain the character set 'AR' together. Return complete information about the employees.
- Write a SQL query to find those employees who joined in 90's. Return complete information about the employees.
- Write a SQL query to find those employees whose ID not start with the digit 68. Return employee ID, employee ID using trim function.
- Write a SQL query to find those employees whose names contain the letter 'A’. Return complete information about the employees.
- Write a SQL query to find those employees whose name ends with 'S' and six characters long. Return complete information about the employees.
- Write a SQL query to find those employees who joined in any month, but the month name contain the character ‘A’. Return complete information about the employees.
- Write a SQL query to find those employees who joined in any month, but the name of the month contain the character ‘A’ in second position. 
- 
+SELECT *
+FROM employeees
+ORDER BY job_name ASC, emp_id DESC
+-------------------------------------------------------------------------------------------------------------------------------------
+(71) Write a SQL query to list the unique jobs of department 2001 and 3001 in descending order. Return job name.
+SELECT DISTINCT job_name, dep_id
+FROM employeees
+WHERE dep_id IN (2001, 3001)
+ORDER BY dep_id DESC
+-------------------------------------------------------------------------------------------------------------------------------------
+(72) Write a SQL query to list all the employees except the PRESIDENT and the MANAGER in ascending order of salaries. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE job_name <> 'PRESIDENT' AND job_name <> 'MANAGER'
+ORDER BY salary ASC
+------------------------------------------------------------------------------------------------------------------------------------- 
+(73) Write a SQL query to find the employees whose annual salary is less than $25,000 per year. Sort the result set in ascending order of the salary. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE salary*12 < 25000
+ORDER BY salary ASC
+------------------------------------------------------------------------------------------------------------------------------------- 
+(74) Write a SQL query to list the employees who works as a SALESMAN. Sort the result set in ascending order of annual salary. Return employee id, name, annual salary, daily salary of all the employees.
+SELECT emp_id, emp_name, salary*12 AS Annual_Salary, salary/30 AS Daily_Salary
+FROM employeees
+WHERE job_name = 'SALESMAN'
+ORDER BY (salary*12) ASC
+------------------------------------------------------------------------------------------------------------------------------------- 
+(75) Write a SQL query to list the employee ID, name, hire date, current date and experience of the employees in ascending order on their experiences.
+SELECT emp_id, emp_name, hire_date, GETDATE() AS Current_Date1, YEAR(GETDATE()) - YEAR(hire_date) AS Experinces 
+FROM employeees
+------------------------------------------------------------------------------------------------------------------------------------- 
+(76) Write a SQL query to list the employees in ascending order of designations of those joined after the second half of 1991.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(77) Write a SQL query to find the location of all the employees working in the FINANCE or AUDIT department. Sort the result-set in ascending order by department ID. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(78) Write a SQL query to find the employees along with grades in ascending order. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(79) Write a SQL query to find the employees according to the department in ascending order. Return name, job name, department, salary, and grade.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(80) Write a SQL query to select all employees except CLERK and sort the results in descending order by salary. Return employee name, job name, salary, grade and department name.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(81) Write a SQL query to find those employees who work in the department 1001 or 2001. Return employee ID, name, salary, department, grade, experience, and annual salary.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(82) Write a SQL query to list the details of the employees along with the details of their departments.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(83) Write a SQL query to list the employees who are senior to their MANAGERS. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(84) Write a SQL query to find those employees who work in the department 1001. Sort the result-set in ascending order by salary. Return employee ID, employee name, salary and department ID.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(85) Write a SQL query to find the second highest salary. Return second highest salary.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(86) Write a SQL query to calculate the average salary and average total remuneration (salary and commission) for each type of job. Return name, average salary and average total remuneration.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(87) Write a SQL query to calculate the total annual salary distributed across each job in 1991. Return job name, total annual salary.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(89) Write a SQL query to list the employee id, name, department id, location of all the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(90) Write a SQL query to find those employees who work in the department ID 1001 or 2001. Return employee ID, employee name, department ID, department location, and department name.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(91) Write a SQL query to find those employees whose salary is in the range of minimum and maximum salary. Return employee ID, name, salary and grade.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(92) Write a SQL query to create a list of the managers and the number of employees they supervise. Sort the result set in ascending order on manager. Return manager ID and number of employees under them.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(93) Write a SQL query to count the number of employees in each designation of a department. Return department id, job name and number of employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(94) Write a SQL query to identify the departments in which at least two employees are employed. Return department id, number of employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(95) Write a SQL query to list the grade, number of employees, and maximum salary of each grade.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(96) Write a SQL query to identify departments with at least two SALESMEN in each grade. Return department name, grade and number of employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(97) Write a SQL query to identify departments with fewer than four employees. Return department ID, number of employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(98) Write a SQL query to find which departments have at least two employees. Return department name, number of employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(99) Write a SQL query to check whether the employees ID are unique or not. Return employee id, number of employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(100) Write a SQL query to find number of employees and average salary. Group the result set on department id and job name. Return number of employees, average salary, department ID, and job name.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(101) Write a SQL query to identify those employees whose names begin with 'A' and are six characters long. Return employee name.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(102) Write a SQL query to find those employees whose name is six characters in length and the third character must be 'R'. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(103) Write a SQL query to find those employees whose name is six characters in length, starting with 'A' and ending with 'N'. Return number of employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(104) Write a SQL query to find those employees who joined in the month of where the second letter is 'a'. Return number of employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(105) Write a SQL query to find those employees whose names contain the character set 'AR' together. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(106) Write a SQL query to find those employees who joined in 90's. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(107) Write a SQL query to find those employees whose ID not start with the digit 68. Return employee ID, employee ID using trim function.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(108) Write a SQL query to find those employees whose names contain the letter 'A’. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(109) Write a SQL query to find those employees whose name ends with 'S' and six characters long. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(110) Write a SQL query to find those employees who joined in any month, but the month name contain the character ‘A’. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(111) Write a SQL query to find those employees who joined in any month, but the name of the month contain the character ‘A’ in second position.
