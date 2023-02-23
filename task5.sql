@@ -50,9 +50,11 @@ VALUES(1, 800, 1300),
 (4, 2101, 3100),
 (5, 3101, 9999);
 
-
-SELECT emp_name, salary
+CREATE PROCEDURE emp_table AS
+BEGIN
+SELECT *
   FROM employeees
+END
 
 SELECT DISTINCT job_name
   FROM employeees
@@ -247,3 +249,59 @@ SELECT e.emp_name AS employee_name, e.job_name, e.manager_id, e.salary, m.emp_na
 FROM employeees e
 INNER JOIN employeees m ON e.manager_id = m.emp_id
 WHERE e.salary > m.salary;
+
+SELECT E.emp_name, E.dep_id, E.salary, E.commission
+FROM employeees E, department D
+WHERE(E.dep_id = D.dep_id) AND (salary BETWEEN 1999 AND 5001)
+AND D.dep_location LIKE 'PERTH'
+
+SELECT E.emp_name, S.grade
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+AND (D.dep_id = 1001 OR D.dep_id = 3001)
+AND S.grade <> 4
+AND E.hire_date < '1991-12-31'
+
+SELECT e.emp_name AS employee_name, e.job_name, e.manager_id, E.hire_date, e.salary, E.dep_id, m.emp_name AS manager_name
+FROM employeees e
+INNER JOIN employeees m ON e.manager_id = m.emp_id
+WHERE m.emp_name LIKE 'JONAS'
+
+SELECT e.emp_name, MAX(s.max_salary) AS max_salary
+FROM employeees e
+INNER JOIN salary_grade s ON e.salary BETWEEN s.min_salary AND s.max_salary
+WHERE e.emp_name LIKE 'FRANK'
+GROUP BY e.emp_name;
+
+EXEC emp_table
+
+SELECT *
+FROM employeees
+WHERE (job_name = 'MANAGER' OR job_name = 'ANALYST') 
+AND (salary BETWEEN 1999  AND 5001)
+AND (commission IS NULL)
+
+SELECT E.emp_id, E.emp_name, E.job_name, E.manager_id, E.hire_date, E.salary, E.commission, E.dep_id, D.dep_location
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
+AND (job_name = 'MANAGER' OR job_name = 'ANALYST') 
+AND (salary BETWEEN 1999  AND 5001)
+AND (commission IS NULL)
+AND YEAR(E.hire_date) = 1991
+AND (D.dep_location LIKE 'SYDNEY' OR D.dep_location LIKE 'MELBOURNE')
+
+SELECT E.dep_id, E.emp_id, E.emp_name, E.salary, D.dep_name, D.dep_location, S.grade 
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+AND D.dep_name LIKE 'MARKETING'
+AND D.dep_location IN ('MELBOURNE', 'PERTH')
+AND S.grade IN (3, 4, 5)
+AND (YEAR(GETDATE()) - YEAR(hire_date)) >= 25
+
+SELECT e.emp_name, MAX(s.max_salary) AS max_salary
+FROM employeees e
+INNER JOIN salary_grade s ON e.salary BETWEEN s.min_salary AND s.max_salary
+WHERE e.emp_name LIKE 'FRANK'
+GROUP BY e.emp_name;

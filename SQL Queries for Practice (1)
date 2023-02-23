@@ -254,27 +254,87 @@ FROM employeees e
 INNER JOIN employeees m ON e.manager_id = m.emp_id
 WHERE e.salary > m.salary;
 -------------------------------------------------------------------------------------------------------------------------------------
- Write a SQL query to find those employees whose salary is between 2000 and 5000 (Begin and end values are included.) and location is PERTH. Return employee name, department ID, salary, and commission
- Write a SQL query to find the employees whose department ID is 1001 or 3001 and whose salary grade is not 4. They joined the company before 1992-12-31. Return grade, employee name.
- Write a SQL query to find those employees whose manager name is JONAS. Return employee id, employee name, job name, manager ID, hire date, salary, department ID, employee name.
- Write a SQL query to find the name and salary of the employee FRANK. Salary should be equal to the maximum salary within his or her salary group.
- Write a SQL query to search for employees who are working either as a MANAGER or an ANALYST with a salary between 2000 and 5000 (Begin and end values are included.) without commissions. Return complete information about the employees.
- Write a SQL query to search for employees who are working either as a MANAGER or an ANALYST with a salary between 2000 and 5000 (Begin and end values are included.) without commissions. Return complete information about the employees.
+(51) Write a SQL query to find those employees whose salary is between 2000 and 5000 (Begin and end values are included.) and location is PERTH. Return employee name, department ID, salary, and commission
+SELECT E.emp_name, E.dep_id, E.salary, E.commission
+FROM employeees E, department D
+WHERE(E.dep_id = D.dep_id) AND (salary BETWEEN 1999 AND 5001)
+AND D.dep_location LIKE 'PERTH'
+-------------------------------------------------------------------------------------------------------------------------------------
+(52) Write a SQL query to find the employees whose department ID is 1001 or 3001 and whose salary grade is not 4. They joined the company before 1992-12-31. Return grade, employee name.
+SELECT E.emp_name, S.grade
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+AND (D.dep_id = 1001 OR D.dep_id = 3001)
+AND S.grade <> 4
+AND E.hire_date < '1991-12-31'
+-------------------------------------------------------------------------------------------------------------------------------------
+(53) Write a SQL query to find those employees whose manager name is JONAS. Return employee id, employee name, job name, manager ID, hire date, salary, department ID, employee name.
+SELECT e.emp_name AS employee_name, e.job_name, e.manager_id, E.hire_date, e.salary, E.dep_id, m.emp_name AS manager_name
+FROM employeees e
+INNER JOIN employeees m ON e.manager_id = m.emp_id
+WHERE m.emp_name LIKE 'JONAS'
+------------------------------------------------------------------------------------------------------------------------------------- 
+(54) Write a SQL query to find the name and salary of the employee FRANK. Salary should be equal to the maximum salary within his or her salary group.
+SELECT e.emp_name, MAX(s.max_salary) AS max_salary
+FROM employeees e
+INNER JOIN salary_grade s ON e.salary BETWEEN s.min_salary AND s.max_salary
+WHERE e.emp_name LIKE 'FRANK'
+GROUP BY e.emp_name;
+------------------------------------------------------------------------------------------------------------------------------------- 
+(55) Write a SQL query to search for employees who are working either as a MANAGER or an ANALYST with a salary between 2000 and 5000 (Begin and end values are included.) without commissions. Return complete information about the employees.
+SELECT *
+FROM employeees
+WHERE (job_name = 'MANAGER' OR job_name = 'ANALYST') 
+AND (salary BETWEEN 1999  AND 5001)
+AND (commission IS NULL)
+------------------------------------------------------------------------------------------------------------------------------------- 
+(56) Write a SQL query to search for employees who are working either as a MANAGER or an ANALYST with a salary between 2000 and 5000 (Begin and end values are included.) without commissions. Return complete information about the employees.
  From the following table, write a SQL query to find the employees who joined in 1991 and whose department location is SYDNEY or MELBOURNE with a salary range of 2000 to 5000. Return employee ID, employee name, department ID, salary, and department location.
- Write a SQL query to find the employees of MARKETING department come from MELBOURNE or PERTH, are in grades 3 ,4, and 5 and have at least 25 years of experience. Return department ID, employee ID, employee name, salary, department name, department location and grade.
- Write a SQL query to find those employees who are senior to their manager. Return complete information about the employees.
- Write a SQL query to determine which employees have a grade of 4 and a salary between the minimum and maximum. Return all information of each employees and their grade and salary related details
- Write a SQL query to find those employees who joined after 1991, excluding MARKER or ADELYN in the departments PRODUCTION or AUDIT. Return employee name.
- Write a SQL query to find the employees and their salaries. Sort the result-set in ascending order by salaries. Return complete information about the employees.
- Write a SQL query to list employees in ascending order on department ID and descending order on jobs. Return complete information about the employees.
- Write a SQL query to sort the unique jobs in descending order. Return job name.
- Write a SQL query to rank the employees according to their annual salary in ascending order. Return employee ID, employee name, monthly salary, salary/30 as Daily_Salary, and 12*salary as Anual_Salary.
- Write a SQL query to find those employees who are either 'CLERK' or 'ANALYST’. Sort the result set in descending order on job_name. Return complete information about the employees.
- Write a SQL query to find the department location of employee ‘CLARE’. Return department location.
- Write a SQL query to find those employees who joined on 1-MAY-91, or 3-DEC-91, or 19-JAN-90. Sort the result-set in ascending order by hire date. Return complete information about the employees.
- Write a SQL query to find those employees who earn less than 1000. Sort the result-set in ascending order by salary. Return complete information about the employees.
- Write a SQL query to list the employees in ascending order based on salary. Return complete information about the employees.
- Write a SQL query to list the employees in the ascending order by job title and in descending order by employee ID. Return complete information about the employees.
+SELECT E.emp_id, E.emp_name, E.job_name, E.manager_id, E.hire_date, E.salary, E.commission, E.dep_id, D.dep_location
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
+AND (job_name = 'MANAGER' OR job_name = 'ANALYST') 
+AND (salary BETWEEN 1999  AND 5001)
+AND (commission IS NULL)
+AND YEAR(E.hire_date) = 1991
+AND (D.dep_location LIKE 'SYDNEY' OR D.dep_location LIKE 'MELBOURNE')
+------------------------------------------------------------------------------------------------------------------------------------- 
+(57) Write a SQL query to find the employees of MARKETING department come from MELBOURNE or PERTH, are in grades 3 ,4, and 5 and have at least 25 years of experience. Return department ID, employee ID, employee name, salary, department name, department location and grade.
+SELECT E.dep_id, E.emp_id, E.emp_name, E.salary, D.dep_name, D.dep_location, S.grade 
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+AND D.dep_name LIKE 'MARKETING'
+AND D.dep_location IN ('MELBOURNE', 'PERTH')
+AND S.grade IN (3, 4, 5)
+AND (YEAR(GETDATE()) - YEAR(hire_date)) >= 25
+------------------------------------------------------------------------------------------------------------------------------------- 
+(58) Write a SQL query to find those employees who are senior to their manager. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(59) Write a SQL query to determine which employees have a grade of 4 and a salary between the minimum and maximum. Return all information of each employees and their grade and salary related details
+------------------------------------------------------------------------------------------------------------------------------------- 
+(60) Write a SQL query to find those employees who joined after 1991, excluding MARKER or ADELYN in the departments PRODUCTION or AUDIT. Return employee name.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(61) Write a SQL query to find the employees and their salaries. Sort the result-set in ascending order by salaries. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(62) Write a SQL query to list employees in ascending order on department ID and descending order on jobs. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(63) Write a SQL query to sort the unique jobs in descending order. Return job name.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(64) Write a SQL query to rank the employees according to their annual salary in ascending order. Return employee ID, employee name, monthly salary, salary/30 as Daily_Salary, and 12*salary as Anual_Salary.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(65) Write a SQL query to find those employees who are either 'CLERK' or 'ANALYST’. Sort the result set in descending order on job_name. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(66) Write a SQL query to find the department location of employee ‘CLARE’. Return department location.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(67) Write a SQL query to find those employees who joined on 1-MAY-91, or 3-DEC-91, or 19-JAN-90. Sort the result-set in ascending order by hire date. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(68) Write a SQL query to find those employees who earn less than 1000. Sort the result-set in ascending order by salary. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(69) Write a SQL query to list the employees in ascending order based on salary. Return complete information about the employees.
+------------------------------------------------------------------------------------------------------------------------------------- 
+(70) Write a SQL query to list the employees in the ascending order by job title and in descending order by employee ID. Return complete information about the employees.
  Write a SQL query to list the unique jobs of department 2001 and 3001 in descending order. Return job name.
  Write a SQL query to list all the employees except the PRESIDENT and the MANAGER in ascending order of salaries. Return complete information about the employees.
  Write a SQL query to find the employees whose annual salary is less than $25,000 per year. Sort the result set in ascending order of the salary. Return complete information about the employees.
