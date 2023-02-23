@@ -300,8 +300,57 @@ AND D.dep_location IN ('MELBOURNE', 'PERTH')
 AND S.grade IN (3, 4, 5)
 AND (YEAR(GETDATE()) - YEAR(hire_date)) >= 25
 
-SELECT e.emp_name, MAX(s.max_salary) AS max_salary
+SELECT *
 FROM employeees e
-INNER JOIN salary_grade s ON e.salary BETWEEN s.min_salary AND s.max_salary
-WHERE e.emp_name LIKE 'FRANK'
-GROUP BY e.emp_name;
+INNER JOIN employeees m ON e.manager_id = m.emp_id
+WHERE m.job_name LIKE 'PRESIDENT'
+
+EXEC emp_table
+
+SELECT emp_name
+FROM employeees
+WHERE YEAR(hire_date) > 1991
+  AND emp_name NOT IN ('MARKER', 'ADELYN')
+  AND dep_id NOT IN (
+    SELECT dep_id
+    FROM department
+    WHERE dep_name IN ('PRODUCTION', 'AUDIT')
+  )
+
+SELECT *
+FROM employeees
+ORDER BY salary ASC
+
+SELECT *
+FROM employeees
+ORDER BY dep_id DESC, job_name DESC
+
+SELECT DISTINCT job_name
+FROM employeees
+ORDER BY job_name DESC
+
+SELECT emp_id, emp_name, salary, salary/30 AS Daily_Salary, 12*salary AS Anual_Salary
+FROM employeees
+ORDER BY (12*salary) DESC
+
+SELECT *
+FROM employeees
+WHERE job_name IN ('CLERK', 'ANALYST')
+ORDER BY job_name DESC
+
+SELECT D.dep_location
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
+AND (E.emp_name LIKE 'CLARE')
+
+SELECT *
+FROM employeees
+WHERE hire_date IN ('1-MAY-91', '3-DEC-91', '19-JAN-90')
+ORDER BY hire_date ASC
+
+EXEC emp_table
+
+SELECT *
+FROM employeees
+WHERE salary < 1000
+ORDER BY salary ASC
