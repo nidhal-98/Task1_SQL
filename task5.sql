@@ -214,3 +214,36 @@ WHERE hire_date LIKE '%____-05-01%' OR hire_date LIKE '%____-02-20%' OR hire_dat
 SELECT *
 FROM employeees
 WHERE manager_id IN (63679, 68319, 66564, 69000);
+
+SELECT *
+FROM employeees
+WHERE hire_date LIKE '%199_-__-__%';
+
+SELECT *
+FROM employeees
+WHERE job_name LIKE 'manager'
+AND dep_id IN (1001, 2001);
+
+SELECT *
+FROM employeees
+WHERE MONTH(hire_date) = 02
+AND salary BETWEEN 1000 AND 2001
+
+SELECT *
+FROM employeees
+WHERE YEAR(hire_date) < 1991 
+OR YEAR(hire_date) > 1991 
+
+SELECT E.*, D.dep_name
+FROM employeees E, department D
+WHERE E.dep_id = D.dep_id
+
+SELECT E.emp_name, E.job_name, E.salary*12 AS Annual_salary, E.dep_id, D.dep_name, S.grade
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)  AND (E.salary*12 >= 60000 OR job_name <> 'ANALYST') 
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+
+SELECT e.emp_name AS employee_name, e.job_name, e.manager_id, e.salary, m.emp_name AS manager_name, m.salary AS manager_salary
+FROM employeees e
+INNER JOIN employeees m ON e.manager_id = m.emp_id
+WHERE e.salary > m.salary;
