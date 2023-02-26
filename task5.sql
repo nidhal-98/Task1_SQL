@@ -410,3 +410,53 @@ SELECT *
 FROM employeees
 WHERE job_name <> 'CLERK'
 ORDER BY salary DESC
+
+SELECT E.emp_id, E.emp_name, E.salary, D.dep_name, S.grade, YEAR(GETDATE()) - YEAR(hire_date) AS Experinces, 12*E.salary AS Annual_Salary
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+AND (E.dep_id IN (1001, 2001))
+
+SELECT E.emp_id, E.*, D.dep_name, D.dep_location
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+
+SELECT emp_id, emp_name, salary, dep_id
+FROM employeees
+WHERE dep_id IN (1001)
+ORDER BY salary ASC
+
+SELECT MAX(salary) AS Second_Highest_Salary
+FROM employeees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employeees
+);
+
+SELECT job_name, AVG(SALARY) AS Salary_Average, AVG(salary+commission) AS Salary_Commission_AVG
+FROM employeees
+GROUP BY job_name
+
+SELECT job_name, SUM(salary*12) AS annual_salary
+FROM employeees
+GROUP BY job_name
+
+SELECT E.emp_id, E.emp_name, D.dep_id, D.dep_location
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
+
+SELECT E.emp_id, E.emp_name, E.salary, D.dep_id, D.dep_location, D.dep_name
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
+AND (E.dep_id IN (1001, 2001))
+
+SELECT e.emp_id, e.emp_name, e.salary, S.grade
+FROM employeees E, salary_grade S
+WHERE (E.salary BETWEEN S.min_salary AND S.max_salary)
+
+SELECT M.emp_id AS Manager_ID, COUNT (E.emp_id)
+FROM employeees E
+ JOIN employeees m ON e.manager_id = m.emp_id
+ WHERE M.job_name LIKE 'MANAGER'
+ GROUP BY M.emp_id

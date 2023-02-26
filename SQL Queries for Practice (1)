@@ -449,26 +449,66 @@ WHERE job_name <> 'CLERK'
 ORDER BY salary DESC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (81) Write a SQL query to find those employees who work in the department 1001 or 2001. Return employee ID, name, salary, department, grade, experience, and annual salary.
+SELECT E.emp_id, E.emp_name, E.salary, D.dep_name, S.grade, YEAR(GETDATE()) - YEAR(hire_date) AS Experinces, 12*E.salary AS Annual_Salary
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+AND (E.dep_id IN (1001, 2001))
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (82) Write a SQL query to list the details of the employees along with the details of their departments.
+SELECT E.emp_id, E.*, D.dep_name, D.dep_location
+FROM employeees E, department D, salary_grade S
+WHERE (E.dep_id = D.dep_id)
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (83) Write a SQL query to list the employees who are senior to their MANAGERS. Return complete information about the employees.
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (84) Write a SQL query to find those employees who work in the department 1001. Sort the result-set in ascending order by salary. Return employee ID, employee name, salary and department ID.
+SELECT emp_id, emp_name, salary, dep_id
+FROM employeees
+WHERE dep_id IN (1001)
+ORDER BY salary ASC
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (85) Write a SQL query to find the second highest salary. Return second highest salary.
+SELECT MAX(salary) AS Second_Highest_Salary
+FROM employeees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employeees
+);
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (86) Write a SQL query to calculate the average salary and average total remuneration (salary and commission) for each type of job. Return name, average salary and average total remuneration.
+SELECT job_name, AVG(SALARY) AS Salary_Average, AVG(salary+commission) AS Salary_Commission_AVG
+FROM employeees
+GROUP BY job_name
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (87) Write a SQL query to calculate the total annual salary distributed across each job in 1991. Return job name, total annual salary.
+SELECT job_name, SUM(salary*12) AS annual_salary
+FROM employeees
+GROUP BY job_name
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (89) Write a SQL query to list the employee id, name, department id, location of all the employees.
+SELECT E.emp_id, E.emp_name, D.dep_id, D.dep_location
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (90) Write a SQL query to find those employees who work in the department ID 1001 or 2001. Return employee ID, employee name, department ID, department location, and department name.
+SELECT E.emp_id, E.emp_name, E.salary, D.dep_id, D.dep_location, D.dep_name
+FROM employeees E, department D
+WHERE (E.dep_id = D.dep_id)
+AND (E.dep_id IN (1001, 2001))
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (91) Write a SQL query to find those employees whose salary is in the range of minimum and maximum salary. Return employee ID, name, salary and grade.
+SELECT e.emp_id, e.emp_name, e.salary, S.grade
+FROM employeees E, salary_grade S
+WHERE (E.salary BETWEEN S.min_salary AND S.max_salary)
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (92) Write a SQL query to create a list of the managers and the number of employees they supervise. Sort the result set in ascending order on manager. Return manager ID and number of employees under them.
+SELECT M.emp_id AS Manager_ID, COUNT (E.emp_id)
+FROM employeees E
+ JOIN employeees m ON e.manager_id = m.emp_id
+ WHERE M.job_name LIKE 'MANAGER'
+ GROUP BY M.emp_id
 ------------------------------------------------------------------------------------------------------------------------------------- 
 (93) Write a SQL query to count the number of employees in each designation of a department. Return department id, job name and number of employees.
 ------------------------------------------------------------------------------------------------------------------------------------- 
